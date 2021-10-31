@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>과제</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+.out {
+	width:80%;
+	word-break:break-all;
+	word-wrap:break-word;
+}
+</style>
+</head>
+<body>
+	<div>
+		<h3>[입력]</h3>
+	</div>
+	<div>
+		URL : <input type="text" name="url" placeholder="URL을 입력해주세요."><br>
+		Type: <select name="type">
+				<option value="EXCLUDE_TAG" selected="selected">HTML 태그 제외</option>
+				<option value="ALL">HTML 전체</option>
+			  </select>
+	</div>
+	<div>
+		출력 단위 묶음 <input type="number" name="unitNum" placeholder="출력 단위 묶음 수를 입력해주세요." >
+		<input type="button" value="출 력" id="parserbtn"/>
+	</div>
+	<div>
+	<h3>[출력]</h3>
+	<div>
+		몫: <div id="quotient" class="out"></div>
+	</div>
+	<div>
+		나머지: <div id="remainder" class="out"></div>
+	</div>
+</body>
+<script type="text/javascript">
+$("#parserbtn").click(function() {
+    var params = {
+              url     : $("input[name=url]").val()
+            , type    : $("select[name=type]").val()
+            , unitNum : $("input[name=unitNum]").val()
+    }
+    
+    $.ajax({
+        type : "POST",
+        url : "/parser",
+        data: JSON.stringify(params),
+        dataType : "json",
+        timeout: 10000,
+        contentType : "application/json",
+        success : function(res){
+        	$("#quotient").text(res.quotient);
+        	$("#remainder").text(res.remainder);
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown){
+            alert("통신에 실패하였습니다.");
+        }
+    });
+});
+</script>
+</html>
