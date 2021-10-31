@@ -38,6 +38,25 @@
 </body>
 <script type="text/javascript">
 $("#parserbtn").click(function() {
+	
+	if($("input[name=url]").val() == '') {
+		alert("URL을 입력해주세요.");
+		return;
+	}
+
+    var Url = /(http|https):\/\/((\w+)[.])+(asia|biz|cc|cn|com|de|eu|in|info|jobs|jp|kr|mobi|mx|name|net|nz|org|travel|tv|tw|uk|us)(\/(\w*))*$/i;
+    var urlTest = Url.test($("input[name=url]").val());
+    
+    if(!urlTest){
+        alert("URL형식이 잘못되었습니다.");
+        return;
+    }
+	
+	if($("input[name=unitNum]").val() == '') {
+		alert("출력 단위 묶음 수를 입력해주세요.");
+		return;
+	}
+	
     var params = {
               url     : $("input[name=url]").val()
             , type    : $("select[name=type]").val()
