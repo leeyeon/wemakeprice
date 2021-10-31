@@ -27,6 +27,7 @@ public abstract class Parser {
 	public Parser(String url, int unitNum) {
 		this.url = url;
 		this.unitNum = unitNum;
+		setHtml();
 	}
 	
 	public ParseResult parse() {
